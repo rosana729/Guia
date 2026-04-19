@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagramas de Flujo - Guía Completa con Ejemplos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #028090 0%, #00A896 100%);
+            color: white;
+            padding: 2rem 0;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .nav-item:hover {
+            background-color: #f0f4f8;
+            color: #028090;
+        }
+
+        .nav-item.active {
+            border-bottom-color: #028090;
+            color: #028090;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #028090;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .card h3 {
+            color: #00A896;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Símbolos más grandes */
+        .symbols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .symbol-card {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 3px solid #028090;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .symbol-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .symbol-visual {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: #028090;
+        }
+
+        .symbol-card h4 {
+            color: #028090;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            text-align: center;
+        }
+
+        .symbol-card .uso {
+            background: #e8f4f8;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 0.5rem;
+        }
+
+        .symbol-card .ejemplo {
+            background: #fff3cd;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Comparison Table */
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .comparison-item h4 {
+            background: #028090;
+            color: white;
+            padding: 0.5rem 1rem;
+            margin: -1.5rem -1.5rem 1rem -1.5rem;
+            border-radius: 8px 8px 0 0;
+        }
+
+        /* Code Blocks */
+        .code-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .code-block.pseudocode {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .code-label {
+            background: #028090;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .code-label.python {
+            background: #3776ab;
+        }
+
+        .code-label.php {
+            background: #8892bf;
+        }
+
+        .code-label.javascript {
+            background: #f7df1e;
+            color: #333;
+        }
+
+        .code-label.pseudo {
+            background: #6c757d;
+        }
+
+        /* Flowchart ASCII */
+        .flowchart {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            white-space: pre;
+            overflow-x: auto;
+            border: 2px solid #028090;
+            line-height: 1.4;
+            font-size: 0.95rem;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Highlights */
+        .highlight {
+            background: #fff3cd;
+            padding: 1rem;
+            border-left: 4px solid #ffc107;
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+
+        .info {
+            background: #d1ecf1;
+            border-left-color: #17a2b8;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+
+        /* Key Concepts */
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .concept-card {
+            background: linear-gradient(135deg, #028090 0%, #00A896 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .concept-card h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* Example Header */
+        .example-header {
+            background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .example-header h2 {
+            color: white;
+            border: none;
+            margin: 0;
+        }
+
+        /* Activity Card */
+        .activity-card {
+            background: white;
+            border: 3px solid #00A896;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .activity-card h3 {
+            background: #00A896;
+            color: white;
+            padding: 1rem;
+            margin: -2rem -2rem 1.5rem -2rem;
+            border-radius: 9px 9px 0 0;
+        }
+
+        /* Answer Card */
+        .answer-card {
+            background: #d4edda;
+            border: 3px solid #28a745;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .answer-card h3 {
+            background: #28a745;
+            color: white;
+            padding: 1rem;
+            margin: -2rem -2rem 1.5rem -2rem;
+            border-radius: 9px 9px 0 0;
+        }
+
+        /* Footer */
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .nav-container { flex-direction: column; }
+            .nav-item { text-align: center; }
+            .symbols-grid { grid-template-columns: 1fr; }
+            .code-container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>📊 Diagramas de Flujo y Programación</h1>
+            <p class="subtitle">Guía Completa: Desde el Diagrama hasta el Código</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-item active" onclick="showSection('intro')">Introducción</div>
+            <div class="nav-item" onclick="showSection('simbolos')">Simbología</div>
+            <div class="nav-item" onclick="showSection('diagramas')">Diagramas Completos</div>
+            <div class="nav-item" onclick="showSection('comparacion')">Comparación Lenguajes</div>
+            <div class="nav-item" onclick="showSection('biblioteca')">Sistema Biblioteca</div>
+            <div class="nav-item" onclick="showSection('conceptos')">Conceptos</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- SECCIÓN: INTRODUCCIÓN -->
+        <div id="intro" class="section active">
+            <div class="card">
+                <h2>¿Qué son los Diagramas de Flujo?</h2>
+                <p>Un <strong>diagrama de flujo</strong> es una representación gráfica de un algoritmo o proceso. Utiliza símbolos estandarizados conectados por flechas para mostrar el flujo de ejecución de las operaciones.</p>
+                
+                <h3>¿Para qué sirven?</h3>
+                <ul>
+                    <li>✅ <strong>Visualizar la lógica</strong> de un programa antes de programarlo</li>
+                    <li>✅ <strong>Comunicar ideas</strong> de manera clara y universal</li>
+                    <li>✅ <strong>Detectar errores lógicos</strong> en el diseño</li>
+                    <li>✅ <strong>Documentar procesos</strong> y algoritmos</li>
+                    <li>✅ <strong>Aprender a pensar</strong> de forma algorítmica</li>
+                </ul>
+
+                <h3>Reglas Básicas</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>1. Dirección del Flujo</h4>
+                        <p>El flujo general es de arriba hacia abajo y de izquierda a derecha</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>2. Inicio y Fin</h4>
+                        <p>Todo diagrama debe tener un inicio y un fin claramente definidos</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>3. Claridad</h4>
+                        <p>Cada símbolo debe contener información clara y concisa</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>4. Conexiones</h4>
+                        <p>Las flechas indican la secuencia de ejecución</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: SIMBOLOGÍA -->
+        <div id="simbolos" class="section">
+            <div class="card">
+                <h2>Simbología de Diagramas de Flujo</h2>
+                <p>Cada símbolo tiene un significado específico y se usa para representar diferentes tipos de operaciones:</p>
+
+                <div class="symbols-grid">
+                    <div class="symbol-card">
+                        <div class="symbol-visual">⬭</div>
+                        <h4>INICIO / FIN</h4>
+                        <div class="uso">
+                            <strong>Uso:</strong> Marca el punto de inicio y finalización del algoritmo. Todo diagrama debe tener exactamente un inicio y uno o más puntos de fin.
+                        </div>
+                        <div class="ejemplo">
+                            <strong>Ejemplo:</strong><br>
+                            INICIO<br>
+                            FIN
+                        </div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">▱</div>
+                        <h4>ENTRADA / SALIDA</h4>
+                        <div class="uso">
+                            <strong>Uso:</strong> Representa operaciones de lectura de datos (entrada) o mostrar resultados (salida). El paralelogramo se inclina hacia la derecha.
+                        </div>
+                        <div class="ejemplo">
+                            <strong>Ejemplos:</strong><br>
+                            Leer nombre<br>
+                            Mostrar total<br>
+                            Pedir edad
+                        </div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">▭</div>
+                        <h4>PROCESO</h4>
+                        <div class="uso">
+                            <strong>Uso:</strong> Representa cualquier operación de procesamiento: cálculos, asignaciones, operaciones matemáticas.
+                        </div>
+                        <div class="ejemplo">
+                            <strong>Ejemplos:</strong><br>
+                            Total = A + B<br>
+                            Contador = Contador + 1<br>
+                            Promedio = Suma / 3
+                        </div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">◇</div>
+                        <h4>DECISIÓN</h4>
+                        <div class="uso">
+                            <strong>Uso:</strong> Representa una pregunta o condición que divide el flujo en dos o más caminos. Siempre tiene al menos dos salidas: SÍ (verdadero) y NO (falso).
+                        </div>
+                        <div class="ejemplo">
+                            <strong>Ejemplos:</strong><br>
+                            ¿X > 0?<br>
+                            ¿A == B?<br>
+                            ¿Hay copias?
+                        </div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">→</div>
+                        <h4>FLECHAS</h4>
+                        <div class="uso">
+                            <strong>Uso:</strong> Conectan los símbolos e indican la dirección del flujo de ejecución. Las flechas muestran el orden en que se ejecutan las operaciones.
+                        </div>
+                        <div class="ejemplo">
+                            <strong>Uso:</strong><br>
+                            Indican dirección<br>
+                            Conectan símbolos<br>
+                            Muestran secuencia
+                        </div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">⭕</div>
+                        <h4>CONECTOR</h4>
+                        <div class="uso">
+                            <strong>Uso:</strong> Se usa cuando el diagrama es muy grande y necesita continuar en otra parte de la página. Los conectores con la misma letra se unen.
+                        </div>
+                        <div class="ejemplo">
+                            <strong>Ejemplo:</strong><br>
+                            A → conecta con → A<br>
+                            B → conecta con → B
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: DIAGRAMAS COMPLETOS -->
+        <div id="diagramas" class="section">
+            <div class="card">
+                <h2>Diagramas de Flujo: Estructura y Ejemplos</h2>
+                
+                <div class="highlight info">
+                    <strong>🎯 En esta sección:</strong> Veremos cómo se compone un diagrama de flujo completo, su estructura, y practicaremos con varios ejemplos.
+                </div>
+
+                <h3>Composición de un Diagrama de Flujo</h3>
+                <p>Un diagrama de flujo completo debe tener los siguientes elementos:</p>
+                
+                <ol>
+                    <li><strong>Punto de INICIO</strong> - Marca donde comienza el algoritmo</li>
+                    <li><strong>Entrada de datos</strong> - Solicita información al usuario</li>
+                    <li><strong>Procesos</strong> - Realiza cálculos y operaciones</li>
+                    <li><strong>Decisiones</strong> - Evalúa condiciones y toma caminos diferentes</li>
+                    <li><strong>Salida de datos</strong> - Muestra resultados</li>
+                    <li><strong>Punto de FIN</strong> - Marca donde termina el algoritmo</li>
+                </ol>
+
+                <h3>Estructura Básica</h3>
+                <div class="flowchart">        [INICIO]
+            |
+            v
+  [Entrada de datos]
+            |
+            v
+      [Proceso]
+            |
+            v
+     ¿Decisión? ---SÍ---> [Proceso A]
+            |                   |
+           NO                   |
+            v                   |
+     [Proceso B] <--------------
+            |
+            v
+  [Salida de datos]
+            |
+            v
+          [FIN]</div>
+
+                <hr style="margin: 3rem 0; border: none; border-top: 2px solid #e0e0e0;">
+
+                <!-- ACTIVIDAD 1 -->
+                <div class="activity-card">
+                    <h3>📝 Actividad 1: Mayor de Dos Números</h3>
+                    <p><strong>Problema:</strong> Leer dos números (A y B) y determinar cuál es el mayor.</p>
+                    
+                    <div class="flowchart">        [INICIO]
+            |
+            v
+    [Leer A, B]
+            |
+            v
+      ¿A > B? ---SÍ---> [Mostrar "A es mayor"]
+            |                      |
+           NO                      |
+            v                      |
+  [Mostrar "B es mayor"] <---------
+            |
+            v
+          [FIN]</div>
+                    
+                    <div class="highlight warning">
+                        <strong>💭 Pregunta:</strong> Si A = 5 y B = 3, ¿qué mostrará el algoritmo?
+                    </div>
+                </div>
+
+                <!-- ACTIVIDAD 2 -->
+                <div class="activity-card">
+                    <h3>📝 Actividad 2: Número Par o Impar</h3>
+                    <p><strong>Problema:</strong> Determinar si un número es par o impar.</p>
+                    
+                    <div class="flowchart">        [INICIO]
+            |
+            v
+       [Leer N]
+            |
+            v
+   ¿N mod 2 == 0? ---SÍ---> [Mostrar "Es PAR"]
+            |                         |
+           NO                         |
+            v                         |
+  [Mostrar "Es IMPAR"] <--------------
+            |
+            v
+          [FIN]</div>
+                    
+                    <div class="highlight warning">
+                        <strong>💭 Preguntas:</strong>
+                        <ul>
+                            <li>¿Qué significa "mod"?</li>
+                            <li>Si N = 7, ¿qué mostrará?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- ACTIVIDAD 3 -->
+                <div class="activity-card">
+                    <h3>📝 Actividad 3: Calcular Factorial</h3>
+                    <p><strong>Problema:</strong> Calcular el factorial de un número N (N! = 1 × 2 × 3 × ... × N)</p>
+                    
+                    <div class="flowchart">        [INICIO]
+            |
+            v
+       [Leer N]
+            |
+            v
+   [Factorial = 1]
+   [i = 1]
+            |
+            v
+      ¿i ≤ N? ---NO---> [Mostrar Factorial]
+            |                   |
+           SÍ                   |
+            v                   |
+  [Factorial = Factorial × i]  |
+  [i = i + 1]                   |
+            |                   |
+            v                   |
+     (volver arriba) -----------
+            |
+            v
+          [FIN]</div>
+                    
+                    <div class="highlight warning">
+                        <strong>💭 Pregunta:</strong> Si N = 5, ¿cuál será el resultado? ¿Cuántas veces se repite el ciclo?
+                    </div>
+                </div>
+
+                <!-- ACTIVIDAD 4 -->
+                <div class="activity-card">
+                    <h3>📝 Actividad 4: Promedio de Tres Números</h3>
+                    <p><strong>Problema:</strong> Calcular el promedio de tres números.</p>
+                    
+                    <div class="flowchart">        [INICIO]
+            |
+            v
+   [Leer A, B, C]
+            |
+            v
+  [Suma = A + B + C]
+            |
+            v
+  [Promedio = Suma / 3]
+            |
+            v
+  [Mostrar Promedio]
+            |
+            v
+          [FIN]</div>
+                </div>
+
+                <hr style="margin: 3rem 0; border: none; border-top: 3px solid #028090;">
+
+                <h2>✅ Respuestas de las Actividades</h2>
+
+                <!-- RESPUESTA 1 -->
+                <div class="answer-card">
+                    <h3>Respuesta Actividad 1: Mayor de Dos Números</h3>
+                    <p><strong>Si A = 5 y B = 3:</strong></p>
+                    <ul>
+                        <li>El algoritmo pregunta: ¿5 > 3?</li>
+                        <li>La respuesta es SÍ (verdadero)</li>
+                        <li>Por lo tanto, muestra: <strong>"A es mayor"</strong></li>
+                    </ul>
+                    <p><strong>Si A = 2 y B = 8:</strong></p>
+                    <ul>
+                        <li>El algoritmo pregunta: ¿2 > 8?</li>
+                        <li>La respuesta es NO (falso)</li>
+                        <li>Por lo tanto, muestra: <strong>"B es mayor"</strong></li>
+                    </ul>
+                </div>
+
+                <!-- RESPUESTA 2 -->
+                <div class="answer-card">
+                    <h3>Respuesta Actividad 2: Número Par o Impar</h3>
+                    <p><strong>¿Qué significa "mod"?</strong></p>
+                    <p>El operador "mod" (módulo) calcula el <strong>residuo de una división</strong>. Por ejemplo:</p>
+                    <ul>
+                        <li>7 mod 2 = 1 (porque 7 ÷ 2 = 3 con residuo 1)</li>
+                        <li>8 mod 2 = 0 (porque 8 ÷ 2 = 4 con residuo 0)</li>
+                    </ul>
+                    <p><strong>Si N = 7:</strong></p>
+                    <ul>
+                        <li>Calculamos: 7 mod 2 = 1</li>
+                        <li>Preguntamos: ¿1 == 0? NO</li>
+                        <li>Por lo tanto, muestra: <strong>"Es IMPAR"</strong></li>
+                    </ul>
+                    <p><strong>Regla:</strong> Si el residuo es 0, el número es PAR. Si el residuo es 1, es IMPAR.</p>
+                </div>
+
+                <!-- RESPUESTA 3 -->
+                <div class="answer-card">
+                    <h3>Respuesta Actividad 3: Calcular Factorial</h3>
+                    <p><strong>Si N = 5, el factorial es 5! = 1 × 2 × 3 × 4 × 5 = 120</strong></p>
+                    <p><strong>Paso a paso:</strong></p>
+                    <ol>
+                        <li>Factorial = 1, i = 1 → ¿1 ≤ 5? SÍ → Factorial = 1 × 1 = 1, i = 2</li>
+                        <li>Factorial = 1, i = 2 → ¿2 ≤ 5? SÍ → Factorial = 1 × 2 = 2, i = 3</li>
+                        <li>Factorial = 2, i = 3 → ¿3 ≤ 5? SÍ → Factorial = 2 × 3 = 6, i = 4</li>
+                        <li>Factorial = 6, i = 4 → ¿4 ≤ 5? SÍ → Factorial = 6 × 4 = 24, i = 5</li>
+                        <li>Factorial = 24, i = 5 → ¿5 ≤ 5? SÍ → Factorial = 24 × 5 = 120, i = 6</li>
+                        <li>Factorial = 120, i = 6 → ¿6 ≤ 5? NO → Mostrar 120</li>
+                    </ol>
+                    <p><strong>El ciclo se repite 5 veces.</strong></p>
+                </div>
+
+                <!-- RESPUESTA 4 -->
+                <div class="answer-card">
+                    <h3>Respuesta Actividad 4: Promedio</h3>
+                    <p><strong>Ejemplo con A=10, B=8, C=9:</strong></p>
+                    <ul>
+                        <li>Suma = 10 + 8 + 9 = 27</li>
+                        <li>Promedio = 27 / 3 = 9</li>
+                        <li>Muestra: <strong>9</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: COMPARACIÓN CON LENGUAJES -->
+        <div id="comparacion" class="section">
+            <div class="card">
+                <h2>Comparación: Diagrama ↔ Pseudocódigo ↔ Código</h2>
+                
+                <div class="highlight info">
+                    <strong>🎯 Concepto Clave:</strong> El MISMO problema se puede expresar en diferentes formas, pero la LÓGICA permanece IGUAL.
+                </div>
+
+                <h3>Las Tres Representaciones</h3>
+                <div class="comparison">
+                    <div class="comparison-item">
+                        <h4>1. Diagrama de Flujo</h4>
+                        <ul>
+                            <li><strong>Visual:</strong> Usa símbolos gráficos</li>
+                            <li><strong>Ventaja:</strong> Fácil de entender el flujo</li>
+                            <li><strong>Ideal para:</strong> Planificar y comunicar</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-item">
+                        <h4>2. Pseudocódigo</h4>
+                        <ul>
+                            <li><strong>Lógico:</strong> Lenguaje natural estructurado</li>
+                            <li><strong>Ventaja:</strong> Independiente del lenguaje</li>
+                            <li><strong>Ideal para:</strong> Diseñar algoritmos</li>
+                        </ul>
+                    </div>
+
+                    <div class="comparison-item">
+                        <h4>3. Código Real</h4>
+                        <ul>
+                            <li><strong>Ejecutable:</strong> Funciona en la computadora</li>
+                            <li><strong>Ventaja:</strong> Implementa la solución</li>
+                            <li><strong>Ideal para:</strong> Crear programas reales</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <hr style="margin: 3rem 0;">
+
+                <!-- EJEMPLO 1: SUMA -->
+                <h3>Ejemplo 1: Suma de Dos Números</h3>
+                
+                <div class="code-label">Diagrama de Flujo</div>
+                <div class="flowchart">        [INICIO]
+            |
+            v
+       [Leer A]
+            |
+            v
+       [Leer B]
+            |
+            v
+   [Suma = A + B]
+            |
+            v
+   [Mostrar Suma]
+            |
+            v
+          [FIN]</div>
+
+                <div class="code-container">
+                    <div>
+                        <div class="code-label pseudo">Pseudocódigo</div>
+                        <div class="code-block pseudocode">INICIO
+  Leer A
+  Leer B
+  Suma ← A + B
+  Mostrar Suma
+FIN</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label python">Python</div>
+                        <div class="code-block">a = float(input('Ingrese A: '))
+b = float(input('Ingrese B: '))
+suma = a + b
+print(f'La suma es: {suma}')</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label javascript">JavaScript</div>
+                        <div class="code-block">let a = parseFloat(prompt('Ingrese A:'));
+let b = parseFloat(prompt('Ingrese B:'));
+let suma = a + b;
+console.log('La suma es: ' + suma);</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label php">PHP</div>
+                        <div class="code-block">&lt;?php
+$a = readline('Ingrese A: ');
+$b = readline('Ingrese B: ');
+$suma = $a + $b;
+echo "La suma es: $suma\n";
+?&gt;</div>
+                    </div>
+                </div>
+
+                <hr style="margin: 3rem 0;">
+
+                <!-- EJEMPLO 2: PAR O IMPAR -->
+                <h3>Ejemplo 2: Número Par o Impar</h3>
+                
+                <div class="code-label">Diagrama de Flujo</div>
+                <div class="flowchart">        [INICIO]
+            |
+            v
+       [Leer N]
+            |
+            v
+   ¿N mod 2 == 0? ---SÍ---> [Mostrar "Es PAR"]
+            |                         |
+           NO                         |
+            v                         |
+  [Mostrar "Es IMPAR"] <--------------
+            |
+            v
+          [FIN]</div>
+
+                <div class="code-container">
+                    <div>
+                        <div class="code-label pseudo">Pseudocódigo</div>
+                        <div class="code-block pseudocode">INICIO
+  Leer N
+  SI (N mod 2 == 0) ENTONCES
+    Mostrar "Es PAR"
+  SINO
+    Mostrar "Es IMPAR"
+  FIN SI
+FIN</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label python">Python</div>
+                        <div class="code-block">n = int(input('Ingrese número: '))
+
+if n % 2 == 0:
+    print('Es PAR')
+else:
+    print('Es IMPAR')</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label javascript">JavaScript</div>
+                        <div class="code-block">let n = parseInt(prompt('Ingrese número:'));
+
+if (n % 2 === 0) {
+  console.log('Es PAR');
+} else {
+  console.log('Es IMPAR');
+}</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label php">PHP</div>
+                        <div class="code-block">&lt;?php
+$n = intval(readline('Ingrese número: '));
+
+if ($n % 2 == 0) {
+    echo "Es PAR\n";
+} else {
+    echo "Es IMPAR\n";
+}
+?&gt;</div>
+                    </div>
+                </div>
+
+                <hr style="margin: 3rem 0;">
+
+                <!-- EJEMPLO 3: FACTORIAL -->
+                <h3>Ejemplo 3: Calcular Factorial</h3>
+                
+                <div class="code-label">Diagrama de Flujo</div>
+                <div class="flowchart">        [INICIO]
+            |
+            v
+       [Leer N]
+            |
+            v
+   [Factorial = 1]
+   [i = 1]
+            |
+            v
+      ¿i ≤ N? ---NO---> [Mostrar Factorial] --> [FIN]
+            |
+           SÍ
+            v
+  [Factorial = Factorial × i]
+  [i = i + 1]
+            |
+            v
+     (volver arriba)</div>
+
+                <div class="code-container">
+                    <div>
+                        <div class="code-label pseudo">Pseudocódigo</div>
+                        <div class="code-block pseudocode">INICIO
+  Leer N
+  Factorial ← 1
+  i ← 1
+  MIENTRAS (i ≤ N) HACER
+    Factorial ← Factorial × i
+    i ← i + 1
+  FIN MIENTRAS
+  Mostrar Factorial
+FIN</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label python">Python</div>
+                        <div class="code-block">n = int(input('Ingrese N: '))
+factorial = 1
+
+for i in range(1, n + 1):
+    factorial *= i
+
+print(f'Factorial: {factorial}')</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label javascript">JavaScript</div>
+                        <div class="code-block">let n = parseInt(prompt('Ingrese N:'));
+let factorial = 1;
+
+for (let i = 1; i <= n; i++) {
+  factorial *= i;
+}
+
+console.log('Factorial: ' + factorial);</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label php">PHP</div>
+                        <div class="code-block">&lt;?php
+$n = intval(readline('Ingrese N: '));
+$factorial = 1;
+
+for ($i = 1; $i <= $n; $i++) {
+    $factorial *= $i;
+}
+
+echo "Factorial: $factorial\n";
+?&gt;</div>
+                    </div>
+                </div>
+
+                <div class="highlight success" style="margin-top: 2rem;">
+                    <h3>✅ Conclusión</h3>
+                    <p><strong>¿Notas las similitudes?</strong></p>
+                    <ul>
+                        <li>✓ La LÓGICA es exactamente la misma en los 4 lenguajes</li>
+                        <li>✓ Los PASOS son idénticos</li>
+                        <li>✓ Solo cambia la SINTAXIS (la forma de escribirlo)</li>
+                        <li>✓ Si entiendes el diagrama y el pseudocódigo, puedes programar en CUALQUIER lenguaje</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: SISTEMA BIBLIOTECA -->
+        <div id="biblioteca" class="section">
+            <div class="card">
+                <div class="example-header">
+                    <h2>📚 Sistema de Biblioteca - Ejemplos Aplicados</h2>
+                    <p>Cinco funcionalidades completas con diagramas de flujo y código</p>
+                </div>
+
+                <!-- EJEMPLO 1: REGISTRAR LIBRO -->
+                <h3>Ejemplo 1: Registrar Libro</h3>
+                <p><strong>Problema:</strong> Agregar un nuevo libro verificando que no esté duplicado.</p>
+
+                <div class="flowchart">        [INICIO]
+            |
+            v
+  [Pedir código, titulo,
+   autor, año, copias]
+            |
+            v
+   ¿El código ya existe? ---SÍ---> [Mostrar error]
+            |                               |
+           NO                               |
+            v                               |
+   [Crear libro nuevo]                     |
+            |                               |
+            v                               |
+   [Agregar a la lista]                    |
+            |                               |
+            v                               |
+  [Mostrar "Registrado"]  <----------------
+            |
+            v
+          [FIN]</div>
+
+                <div class="code-container">
+                    <div>
+                        <div class="code-label pseudo">Pseudocódigo</div>
+                        <div class="code-block pseudocode">INICIO
+  PEDIR codigo, titulo, autor, anio, copias
+  SI el codigo ya existe ENTONCES
+      MOSTRAR "Error: ese libro ya existe"
+  SINO
+      CREAR libro con esos datos
+      AGREGAR libro a la lista
+      MOSTRAR "Libro registrado"
+  FIN SI
+FIN</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label python">Código Python</div>
+                        <div class="code-block">def registrar_libro(codigo, titulo, autor, anio, copias):
+    # Verificar que el código no exista
+    for libro in lista_libros:
+        if libro["codigo"] == codigo:
+            print("ERROR: Ya existe ese libro.")
+            return
+    
+    # Crear el libro
+    libro_nuevo = {
+        "codigo": codigo,
+        "titulo": titulo,
+        "autor": autor,
+        "anio": anio,
+        "copias_totales": copias,
+        "copias_disponibles": copias
+    }
+    
+    # Agregar a la lista
+    lista_libros.append(libro_nuevo)
+    print(f"Libro '{titulo}' registrado.")</div>
+                    </div>
+                </div>
+
+                <hr style="margin: 3rem 0; border: none; border-top: 2px solid #e0e0e0;">
+
+                <!-- EJEMPLO 2: REALIZAR PRÉSTAMO -->
+                <h3>Ejemplo 2: Realizar Préstamo</h3>
+                <p><strong>Problema:</strong> Registrar un préstamo verificando libro, miembro y copias disponibles.</p>
+
+                <div class="flowchart">        [INICIO]
+            |
+            v
+  [Pedir código libro e ID miembro]
+            |
+            v
+  ¿Libro existe? ---NO---> [Mostrar error] --> [FIN]
+            |
+           SÍ
+            v
+  ¿Miembro existe? ---NO---> [Mostrar error] --> [FIN]
+            |
+           SÍ
+            v
+  ¿Hay copias? ---NO---> [Mostrar error] --> [FIN]
+            |
+           SÍ
+            v
+  [Calcular fecha limite = hoy + 14 dias]
+            |
+            v
+  [Crear registro de prestamo]
+            |
+            v
+  [Copias disponibles = copias - 1]
+            |
+            v
+  [Guardar prestamo en lista]
+            |
+            v
+  [Mostrar confirmacion]
+            |
+            v
+          [FIN]</div>
+
+                <div class="code-container">
+                    <div>
+                        <div class="code-label pseudo">Pseudocódigo</div>
+                        <div class="code-block pseudocode">INICIO
+  PEDIR codigo del libro
+  PEDIR id del miembro
+  SI el libro no existe ENTONCES
+      MOSTRAR "Error: libro no encontrado"
+      TERMINAR
+  FIN SI
+  SI el miembro no existe ENTONCES
+      MOSTRAR "Error: miembro no encontrado"
+      TERMINAR
+  FIN SI
+  SI copias disponibles = 0 ENTONCES
+      MOSTRAR "Error: no hay copias"
+      TERMINAR
+  FIN SI
+  CREAR prestamo (fecha hoy + 14 dias)
+  RESTAR 1 a copias disponibles
+  AGREGAR prestamo a la lista
+  MOSTRAR "Préstamo realizado"
+FIN</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label python">Código Python</div>
+                        <div class="code-block">def realizar_prestamo(codigo, id_miembro):
+    from datetime import date, timedelta
+    
+    # Verificar libro
+    libro = buscar_libro(codigo)
+    if libro is None:
+        print("ERROR: Libro no existe.")
+        return
+    
+    # Verificar miembro
+    miembro = buscar_miembro(id_miembro)
+    if miembro is None:
+        print("ERROR: Miembro no existe.")
+        return
+    
+    # Verificar copias
+    if libro["copias_disponibles"] == 0:
+        print("ERROR: No hay copias.")
+        return
+    
+    # Crear préstamo
+    hoy = date.today()
+    fecha_limite = hoy + timedelta(days=14)
+    
+    prestamo = {
+        "id": generar_id(),
+        "codigo": codigo,
+        "id_miembro": id_miembro,
+        "fecha_prestamo": str(hoy),
+        "fecha_limite": str(fecha_limite),
+        "devuelto": False
+    }
+    
+    # Actualizar y guardar
+    libro["copias_disponibles"] -= 1
+    lista_prestamos.append(prestamo)
+    
+    print("Préstamo realizado correctamente.")</div>
+                    </div>
+                </div>
+
+                <hr style="margin: 3rem 0; border: none; border-top: 2px solid #e0e0e0;">
+
+                <!-- EJEMPLO 3: BUSCAR LIBRO -->
+                <h3>Ejemplo 3: Buscar Libro</h3>
+                <p><strong>Problema:</strong> Buscar libros que contengan un término en título, autor o código.</p>
+
+                <div class="flowchart">        [INICIO]
+            |
+            v
+  [Pedir termino de busqueda]
+            |
+            v
+  [Crear lista resultados vacia]
+            |
+            v
+  [Tomar primer libro]
+            |
+            v
+  ¿Termino en titulo,         SÍ
+   autor o codigo? -----------> [Agregar a resultados]
+            |                        |
+           NO                        |
+            v <---------------------
+  ¿Quedan mas libros? --SÍ--> [Tomar siguiente]
+            |
+           NO
+            v
+  ¿Resultados vacios? --SÍ--> [Mostrar "Sin resultados"]
+            |                        |
+           NO                        |
+            v                        v
+  [Mostrar resultados] <------------
+            |
+            v
+          [FIN]</div>
+
+                <div class="code-container">
+                    <div>
+                        <div class="code-label pseudo">Pseudocódigo</div>
+                        <div class="code-block pseudocode">INICIO
+  PEDIR termino de busqueda
+  CREAR lista_resultados vacia
+  PARA CADA libro EN la lista HACER
+      SI termino en titulo O autor O codigo ENTONCES
+          AGREGAR libro a lista_resultados
+      FIN SI
+  FIN PARA
+  SI lista_resultados vacia ENTONCES
+      MOSTRAR "No se encontraron resultados"
+  SINO
+      MOSTRAR lista_resultados
+  FIN SI
+FIN</div>
+                    </div>
+
+                    <div>
+                        <div class="code-label python">Código Python</div>
+                        <div class="code-block">def buscar_libros(termino):
+    termino = termino.lower()
+    resultados = []
+    
+    for libro in lista_libros:
+        en_titulo = termino in libro["titulo"].lower()
+        en_autor = termino in libro["autor"].lower()
+        en_codigo = termino in libro["codigo"].lower()
+        
+        if en_titulo or en_autor or en_codigo:
+            resultados.append(libro)
+    
+    return resultados
+
+
+def mostrar_resultados(resultados):
+    if len(resultados) == 0:
+        print("No se encontraron resultados.")
+    else:
+        print(f"Encontrados {len(resultados)} libro(s):")
+        for libro in resultados:
+            print(f"  [{libro['codigo']}] {libro['titulo']}")</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECCIÓN: CONCEPTOS CLAVE -->
+        <div id="conceptos" class="section">
+            <div class="card">
+                <h2>Conceptos Clave de Programación</h2>
+                
+                <div class="symbols-grid">
+                    <div class="symbol-card">
+                        <div class="symbol-visual">📦</div>
+                        <h4>LISTA / ARREGLO</h4>
+                        <div class="uso">
+                            Una colección ordenada de elementos. Cada elemento tiene una posición (índice).
+                        </div>
+                        <div class="ejemplo">
+libros = ["Don Quijote", "1984"]
+libros[0]  # "Don Quijote"
+libros[1]  # "1984"</div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">📋</div>
+                        <h4>DICCIONARIO</h4>
+                        <div class="uso">
+                            Una estructura con pares clave-valor. Como una ficha con campos etiquetados.
+                        </div>
+                        <div class="ejemplo">
+libro = {
+    "codigo": "L001",
+    "titulo": "El Principito",
+    "copias": 3
+}
+libro["titulo"]  # acceder</div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">⚙️</div>
+                        <h4>FUNCIÓN</h4>
+                        <div class="uso">
+                            Bloque de código reutilizable que realiza una tarea específica.
+                        </div>
+                        <div class="ejemplo">
+def saludar(nombre):
+    print("Hola, " + nombre)
+
+saludar("Ana")  # usar la función</div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">🔀</div>
+                        <h4>CONDICIÓN (SI/SINO)</h4>
+                        <div class="uso">
+                            Permite tomar decisiones basadas en condiciones verdaderas o falsas.
+                        </div>
+                        <div class="ejemplo">
+if copias > 0:
+    print("Disponible")
+else:
+    print("No hay copias")</div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">🔁</div>
+                        <h4>BUCLE (PARA CADA)</h4>
+                        <div class="uso">
+                            Repite una acción para cada elemento de una colección.
+                        </div>
+                        <div class="ejemplo">
+for libro in lista_libros:
+    print(libro["titulo"])
+# Imprime cada título</div>
+                    </div>
+
+                    <div class="symbol-card">
+                        <div class="symbol-visual">🔍</div>
+                        <h4>BÚSQUEDA</h4>
+                        <div class="uso">
+                            Encontrar elementos que cumplan una condición específica.
+                        </div>
+                        <div class="ejemplo">
+for libro in lista_libros:
+    if libro["codigo"] == "L001":
+        print("¡Encontrado!")
+        break</div>
+                    </div>
+                </div>
+
+                <div class="highlight success" style="margin-top: 2rem;">
+                    <h3>💡 Conclusión Final</h3>
+                    <p><strong>Aprender a programar es aprender a PENSAR de forma lógica y estructurada.</strong></p>
+                    <ul style="margin-top: 1rem;">
+                        <li>✅ Los diagramas de flujo te ayudan a visualizar la lógica ANTES de programar</li>
+                        <li>✅ El pseudocódigo te permite diseñar sin preocuparte por la sintaxis</li>
+                        <li>✅ El código real (Python, JavaScript, PHP) implementa esa lógica</li>
+                        <li>✅ La lógica es UNIVERSAL - solo cambia la sintaxis del lenguaje</li>
+                        <li>✅ Si dominas los diagramas de flujo, puedes aprender CUALQUIER lenguaje de programación</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>📚 Material educativo sobre Diagramas de Flujo y Programación</p>
+        <p style="margin-top: 0.5rem; opacity: 0.8;">Del diagrama al código - Aprende a pensar como programador</p>
+    </footer>
+
+    <script>
+        function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.add('active');
+
+            // Actualizar navegación
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Scroll al inicio
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
